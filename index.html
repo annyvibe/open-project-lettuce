@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- iOS 专用适配 -->
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>手势控制播放器</title>
+
+  <!-- 核心依赖 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+  <!-- iOS 触控优化 -->
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: none;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    #loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-family: Arial;
+      font-size: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loading">点击屏幕开始...</div>
+
+  <script>
+    // 预加载优化
+    let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // 自动启动视频（仅限桌面）
+    if (!isIOS) {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('loading').style.display = 'none';
+      });
+    }
+
+    // 点击处理（iOS必备）
+    function handleFirstTap() {
+      document.getElementById('loading').style.display = 'none';
+      document.removeEventListener('click', handleFirstTap);
+    }
+    document.addEventListener('click', handleFirstTap);
+  </script>
+
+  <script src="sketch.js"></script>
+</body>
+
+</html>
