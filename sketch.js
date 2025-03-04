@@ -2,7 +2,7 @@
 let videoPlayer;
 let hands;
 let camera;
-let lastSpeed = 1;
+let lastSpeed = 1.1;
 const speedFilter = 0.2;
 
 function setup() {
